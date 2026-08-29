@@ -35,7 +35,10 @@ The `attack/` directory contains the codes used to generate DDoS attack traffic 
 This directory contains:
 
 - **Bot code**
+- **Bot pseudo-code**
 - **Command and Control (C&C) code**
+- **Command and Control (C&C) pseudo-code**
+
 
 The Bot code represents the component used to generate attack traffic in the experimental environment, while the C&C code represents the component used to control the Bot component.
 
@@ -47,7 +50,7 @@ These codes were used to generate DDoS attack traffic within the controlled expe
 |---|---|
 | `topology/` | GNS3 experimental topology |
 | `network-config/` | Router configurations |
-| `attack/` | Bot and Command and Control (C&C) codes |
+| `attack/` | Bot and Command and Control (C&C) codes and pseudo-code |
 
 ## Reproducibility
 
