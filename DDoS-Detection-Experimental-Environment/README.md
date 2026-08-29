@@ -37,7 +37,9 @@ This directory contains:
 - GNS3 network topology,
 - Router configurations,
 - Bot code,
-- Command and Control (C&C) code.
+- Bot pseudo-code,
+- Command and Control (C&C) code,
+- Command and Control (C&C) pseudo-code.
 
 For detailed information about the GNS3 experimental environment, please refer to the `GNS3/README.md` file.
 
