@@ -1,8 +1,3 @@
-# PYbot - A simple Python botnet
-# Author: WodX
-# Date: 27/09/2019
-# Bot
-
 import socket 
 import threading
 import time
